@@ -3,14 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Mandatory stuff to bootstrap.
 ////////////////////////////////////////////////////////////////////////////////
-require(implode(DIRECTORY_SEPARATOR, array(
-    __DIR__,
-    '..',
-    '..',
-    '..',
-    'vendor',
-    'autoload.php'
-)));
+require __DIR__ . '/vendor/autoload.php';
 
 use PAMI\Client\Impl\ClientImpl;
 use PAMI\Listener\IEventListener;
