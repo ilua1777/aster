@@ -18,19 +18,23 @@ use PAMIClient\CallAMI;
 * end: for events listener
 */
 
+$curl = new Curl();
+
 $callami = new CallAMI();
 $pamiClient = $callami->NewPAMIClient();
 $pamiClient->open();
 
 //обрабатываем NewchannelEvent события
 $pamiClient->registerEventListener(
-    function (EventMessage $event) {
+    function (EventMessage $event) use ($curl) {
         // $callUniqueid = $event->getUniqueid();
         // $extNum = $event->getCallerIDNum();
         // $CallChannel = $event->getChannel();
         // $extention = $event->getExtension();
 
         var_dump('New NewchannelEvent call');
+        $result = $curl->post('*', ['uniqueId' => $event->getUniqueid()]);
+        print_r($result);
     },
     function (EventMessage $event) {
         //для фильтра берем только указанные внешние номера
