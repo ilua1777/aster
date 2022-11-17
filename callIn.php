@@ -24,7 +24,7 @@ $pamiClient->open();
 
 //обрабатываем NewchannelEvent события
 $pamiClient->registerEventListener(
-    function (EventMessage $event) use ($helper, $callami, $globalsObj) {
+    function (EventMessage $event) {
         // $callUniqueid = $event->getUniqueid();
         // $extNum = $event->getCallerIDNum();
         // $CallChannel = $event->getChannel();
@@ -32,7 +32,7 @@ $pamiClient->registerEventListener(
 
         var_dump('New NewchannelEvent call');
     },
-    function (EventMessage $event) use ($globalsObj) {
+    function (EventMessage $event) {
         //для фильтра берем только указанные внешние номера
         return
             $event instanceof NewchannelEvent;
@@ -43,7 +43,7 @@ $pamiClient->registerEventListener(
 
 //обрабатываем DialBeginEvent события
 $pamiClient->registerEventListener(
-    function (EventMessage $event) use ($helper, $globalsObj) {
+    function (EventMessage $event) {
         // $callUniqueid = $event->getUniqueid();
         // $intNum = $event->getDestCallerIDNum();
         // $extNum = $event->getCallerIDNum();
@@ -51,7 +51,7 @@ $pamiClient->registerEventListener(
 
         var_dump('New incoming call');
     },
-    function (EventMessage $event) use ($globalsObj) {
+    function (EventMessage $event) {
         //для фильтра по uniqueid
         return
             $event instanceof DialBeginEvent;
@@ -62,7 +62,7 @@ $pamiClient->registerEventListener(
 
 //обрабатываем DialEndEvent события
 $pamiClient->registerEventListener(
-    function (EventMessage $event) use ($helper, $globalsObj) {
+    function (EventMessage $event) {
         // $callUniqueid = $event->getUniqueid();
         // $globalsObj->intNums[$callUniqueid] = $event->getDestCallerIDNum();
         // $extNum = $event->getCallerIDNum();
@@ -82,7 +82,7 @@ $pamiClient->registerEventListener(
         //         break;
         // }
     },
-    function (EventMessage $event) use ($globalsObj) {
+    function (EventMessage $event) {
         //для фильтра по uniqueid
         return
             $event instanceof DialEndEvent;
@@ -93,6 +93,6 @@ $pamiClient->registerEventListener(
 
 while (true) {
     $pamiClient->process();
-    usleep($helper->getConfig('listener_timeout'));
+    usleep(300);
 }
 $pamiClient->ClosePAMIClient($pamiClient);
