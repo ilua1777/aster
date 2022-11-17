@@ -1,4 +1,7 @@
 <?php
+
+namespace Demo;
+
 require __DIR__ . '/vendor/autoload.php';
 
 $options = [

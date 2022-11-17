@@ -1,10 +1,13 @@
 <?php
 
+namespace Demo;
+
 ////////////////////////////////////////////////////////////////////////////////
 // Mandatory stuff to bootstrap.
 ////////////////////////////////////////////////////////////////////////////////
 require __DIR__ . '/vendor/autoload.php';
 
+use Exception;
 use PAMI\Client\Impl\ClientImpl;
 use PAMI\Listener\IEventListener;
 use PAMI\Message\Event\EventMessage;
@@ -97,9 +100,7 @@ class A implements IEventListener
         var_dump($event);
     }
 }
-////////////////////////////////////////////////////////////////////////////////
-// Code STARTS.
-////////////////////////////////////////////////////////////////////////////////
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -114,31 +115,18 @@ try
         'connect_timeout' => 10000,
         'read_timeout' => 10000
     ];
+
 	$a = new ClientImpl($options);
-    // Registering a closure
-    //$client->registerEventListener(function ($event) {
-    //});
-
-    // Register a specific method of an object for event listening
-    //$client->registerEventListener(array($listener, 'handle'));
-
-    // Register an IEventListener:
 	$a->registerEventListener(new A());
 	$a->open();
     
-    var_dump($a->send(new CoreShowChannelsAction()));
-
-	$time = time();
-	while(true)//(time() - $time) < 60) // Wait for events.
+	while(true)
 	{
-	    usleep(1000); // 1ms delay
-	    // Since we declare(ticks=1) at the top, the following line is not necessary
+	    usleep(1000);
 	    $a->process();
 	}
-	$a->close(); // send logoff and close the connection.
+
+	$a->close();
 } catch (Exception $e) {
 	echo $e->getMessage() . "\n";
 }
-////////////////////////////////////////////////////////////////////////////////
-// Code ENDS.
-////////////////////////////////////////////////////////////////////////////////

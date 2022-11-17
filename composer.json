@@ -1,5 +1,10 @@
 {
   "require": {
     "marcelog/pami": "2.*"
+  },
+  "autoload": {
+    "classmap": [
+        "PAMIClient/"
+      ]
   }
 }
