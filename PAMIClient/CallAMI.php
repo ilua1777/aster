@@ -19,7 +19,8 @@ class CallAMI {
 	 */
 	public function NewPAMIClient()
     {
-		return new ClientImpl($this->config->getConfig());
+		$impl = new ClientImpl($this->config->getConfig());
+		return $impl;
 	}
 
 	/**
@@ -29,7 +30,7 @@ class CallAMI {
 	 *
 	 * @return mixed
 	 */
-	public function ClosePAMIClient(ClientImpl $pamiClient)
+	public function ClosePAMIClient($pamiClient)
     {
 	    return $pamiClient->close();
 	}

@@ -1,5 +1,7 @@
 <?php
 
+namespace PAMIClient;
+
 require __DIR__ . '/vendor/autoload.php';
 
 /*
@@ -17,7 +19,7 @@ use PAMIClient\CallAMI;
 */
 
 $callami = new CallAMI();
-$pamiClient = $pamiClient->NewPAMIClient();
+$pamiClient = $callami->NewPAMIClient();
 $pamiClient->open();
 
 //обрабатываем NewchannelEvent события
